@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script> 
+		<script type="text/javascript" src="js/utils.js"></script> 
+		<title></title>
+	</head>
+	<body>
+		<form id="img"  method="post" enctype="multipart/form-data">
+										<input id="file" type="file" name="file"  />
+										
+										<button class="btn btn_primary" id="upload" type="button" onclick="detect()">上传</button>
+									</form>
+	</body>
+	<script>
+		var img;
+		 var reader = new FileReader();
+		 reader.onload = function(e) {
+      		console.log(e.target.result);
+      		img = e.target.result;
+      		dos();
+  		}
+		function detect(){
+			reader.readAsDataURL(document.getElementById("file").files[0]);
+		}
+		function dos(){
+			var arr = img.split(',');
+			$.ajax({
+	        url:'https://api-cn.faceplusplus.com/facepp/v3/detect',
+	        data:{api_key:"o9YkWqD51cPCuI0X_knQ7f1CgzXfPiBI",
+					api_secret:"SWHi48OaxPLmx0dL_hn5N1dNaTLp_Oxo",
+	        		image_base64:arr[1]
+	        },
+	        async:true,
+	        type:'POST',
+	        dataType:'json',
+	        success : function(result) {
+	            console.log(toJson(result));
+	            alert(toJson(result.faces[0].face_token));
+	        },
+	        error : function(){
+	        		console.log("出错了");
+	        }
+	       });
+		}
+	</script>
+</html>

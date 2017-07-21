@@ -1,0 +1,78 @@
+.ui-timepicker-div .ui-widget-header {
+	margin-bottom: 8px;
+}
+.ui-timepicker-div dl {
+	text-align: left;
+}
+.ui-timepicker-div dl dt {
+	padding: 0px 0px 0px 5px; clear: left; float: left;
+}
+.ui-timepicker-div dl dd {
+	margin: 0px 10px 10px 40%;
+}
+.ui-timepicker-div td {
+	font-size: 90%;
+}
+.ui-tpicker-grid-label {
+	background: none; margin: 0px; padding: 0px; border: currentColor; border-image: none;
+}
+.ui-timepicker-div .ui_tpicker_unit_hide {
+	display: none;
+}
+.ui-timepicker-div .ui_tpicker_time .ui_tpicker_time_input {
+	background: none; border-width: medium medium 1px; border-style: none none solid; border-color: currentColor currentColor rgb(85, 85, 85); border-image: none; width: 95%; color: inherit;
+}
+.ui-timepicker-div .ui_tpicker_time .ui_tpicker_time_input:focus {
+	border-bottom-color: rgb(170, 170, 170);
+}
+.ui-timepicker-rtl {
+	direction: rtl;
+}
+.ui-timepicker-rtl dl {
+	padding: 0px 5px 0px 0px; text-align: right;
+}
+.ui-timepicker-rtl dl dt {
+	clear: right; float: right;
+}
+.ui-timepicker-rtl dl dd {
+	margin: 0px 40% 10px 10px;
+}
+.ui-timepicker-oneLine.ui-timepicker-div {
+	padding-right: 2px;
+}
+.ui-timepicker-oneLine.ui-timepicker-div .ui_tpicker_time {
+	display: none;
+}
+.ui-timepicker-oneLine.ui-timepicker-div dt {
+	display: none;
+}
+.ui-timepicker-oneLine.ui-timepicker-div .ui_tpicker_time_label {
+	padding-top: 2px; display: block;
+}
+.ui-timepicker-oneLine.ui-timepicker-div dl {
+	text-align: right;
+}
+.ui-timepicker-oneLine.ui-timepicker-div dl dd {
+	margin: 0px; display: inline-block;
+}
+.ui-timepicker-oneLine.ui-timepicker-div dl dd > div {
+	margin: 0px; display: inline-block;
+}
+.ui-timepicker-oneLine.ui-timepicker-div dl dd.ui_tpicker_minute::before {
+	display: inline-block; content: ":";
+}
+.ui-timepicker-oneLine.ui-timepicker-div dl dd.ui_tpicker_second::before {
+	display: inline-block; content: ":";
+}
+.ui-timepicker-oneLine.ui-timepicker-div dl dd.ui_tpicker_millisec::before {
+	display: inline-block; content: ".";
+}
+.ui-timepicker-oneLine.ui-timepicker-div dl dd.ui_tpicker_microsec::before {
+	display: inline-block; content: ".";
+}
+.ui-timepicker-oneLine.ui-timepicker-div .ui_tpicker_unit_hide {
+	display: none;
+}
+.ui-timepicker-oneLine.ui-timepicker-div .ui_tpicker_unit_hide::before {
+	display: none;
+}

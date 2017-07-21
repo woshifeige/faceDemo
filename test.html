@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script> 
+		<script type="text/javascript" src="js/utils.js"></script> 
+<title></title>
+<style>
+video {
+    border: 1px solid #ccc;
+    display: block;
+    margin: 0 0 20px 0;
+    float:left;
+}
+canvas {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    display: block;
+}
+</style>
+</head>
+<body>
+<video width="640" height="480" id="myVideo"></video>
+<canvas width="640" height="480" id="myCanvas"></canvas>
+<button id="myButton">拍照</button>
+</body>
+<script>
+window.addEventListener('DOMContentLoaded',function(){
+var cobj=document.getElementById('myCanvas').getContext('2d');
+var vobj=document.getElementById('myVideo');
+getUserMedia({video:true},function(stream){
+vobj.src=stream;
+vobj.play();
+},function(){});
+document.getElementById('myButton').addEventListener('click',function(){
+cobj.drawImage(vobj,0,0,640,480);
+var arr = cobj.canvas.toDataURL().split(',');
+console.log(cobj.canvas.toDataURL());
+$.ajax({
+	        url:'https://api-cn.faceplusplus.com/facepp/v3/search',
+	        data:{api_key:"o9YkWqD51cPCuI0X_knQ7f1CgzXfPiBI",
+					api_secret:"SWHi48OaxPLmx0dL_hn5N1dNaTLp_Oxo",
+	        		image_base64:arr[1],
+	        		outer_id:'feige'
+	        },
+	        async:true,
+	        type:'POST',
+	        dataType:'json',
+	        success : function(result) {
+	            console.log(toJson(result));
+	            alert("你是"+result.results[0].user_id);
+	        },
+	        error : function(){
+	        		console.log("出错了");
+	        }
+	       });
+},false);
+/*document.getElementById('myButton2').addEventListener('click',function(){
+},false);*/
+},false);
+function getUserMedia(obj,success,error){
+if(navigator.getUserMedia){
+getUserMedia=function(obj,success,error){
+navigator.getUserMedia(obj,function(stream){
+success(stream);
+},error);
+}
+}else if(navigator.webkitGetUserMedia){
+getUserMedia=function(obj,success,error){
+navigator.webkitGetUserMedia(obj,function(stream){
+var _URL=window.URL || window.webkitURL;
+success(_URL.createObjectURL(stream));
+},error);
+}
+}else if(navigator.mozGetUserMedia){
+getUserMedia=function(obj,success,error){
+navigator.mozGetUserMedia(obj,function(stream){
+success(window.URL.createObjectURL(stream));
+},error);
+}
+}else{
+return false;
+}
+return getUserMedia(obj,success,error);
+}
+</script>
+</html>

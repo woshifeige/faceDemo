@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script> 
+		<script type="text/javascript" src="js/utils.js"></script> 
+		<title></title>
+	</head>
+	<body>
+		<button class="btn btn_primary" id="create" type="button" onclick="createSet()">创建set</button>
+		<form id="img"  method="post" enctype="multipart/form-data">
+										<input id="file" type="file" name="file"  />
+										<input id="name" type="text">头像名</input>
+										<button class="btn btn_primary" id="upload" type="button" onclick="detect()">上传</button>
+									</form>
+									<button class="btn btn_primary" id="add" type="button" onclick="add()">确认</button>
+	</body>
+	<script>
+		//创建集合
+		function createSet(){
+			$.ajax({
+	        url:'https://api-cn.faceplusplus.com/facepp/v3/faceset/create',
+	        data:{api_key:"o9YkWqD51cPCuI0X_knQ7f1CgzXfPiBI",
+					api_secret:"SWHi48OaxPLmx0dL_hn5N1dNaTLp_Oxo",
+	       			display_name:'飞哥',
+	       			outer_id:"feige"
+	        },
+	        async:true,
+	        type:'POST',
+	        dataType:'json',
+	        success : function(result) {
+	            console.log(toJson(result));
+	        },
+	        error : function(){
+	        		console.log("出错了");
+	        }
+	       });
+		}
+		//添加
+		function add(){
+			console.log(tokens);
+			$.ajax({
+	        url:'https://api-cn.faceplusplus.com/facepp/v3/faceset/addface',
+	        data:{api_key:"o9YkWqD51cPCuI0X_knQ7f1CgzXfPiBI",
+					api_secret:"SWHi48OaxPLmx0dL_hn5N1dNaTLp_Oxo",
+	       			outer_id:"feige",
+	       			face_tokens:'e9f694ebfed04895055690c2bed7987c,56f923cd96e46feee951c743bb140e97,56869f1d02a931c78b53c63ee20f2d59,ffe98d1652466cae0d67b35070aebf9e,6b6c9ad07e46169029ff1dd4164b8fac,e6536024882bd4645833f1e6b8ea14c7'
+	        },
+	        async:true,
+	        type:'POST',
+	        dataType:'json',
+	        success : function(result) {
+	            console.log(toJson(result));
+	        },
+	        error : function(){
+	        		console.log("出错了");
+	        }
+	       });
+		}
+		var tokens='';
+		var img;
+		 var reader = new FileReader();
+		 reader.onload = function(e) {
+      		console.log(e.target.result);
+      		img = e.target.result;
+      		dos();
+  		}
+		function detect(){
+			reader.readAsDataURL(document.getElementById("file").files[0]);
+		}
+		function dos(){
+			var arr = img.split(',');
+			$.ajax({
+	        url:'https://api-cn.faceplusplus.com/facepp/v3/detect',
+	        data:{api_key:"o9YkWqD51cPCuI0X_knQ7f1CgzXfPiBI",
+					api_secret:"SWHi48OaxPLmx0dL_hn5N1dNaTLp_Oxo",
+	        		image_base64:arr[1]
+	        },
+	        async:true,
+	        type:'POST',
+	        dataType:'json',
+	        success : function(result) {
+	            console.log(toJson(result));
+	            tokens+=result.faces[0].face_token+",";
+	            adduser(result.faces[0].face_token);
+	        },
+	        error : function(){
+	        		console.log("出错了");
+	        }
+	       });
+	      } 
+	      function adduser(token){
+			$.ajax({
+	        url:'https://api-cn.faceplusplus.com/facepp/v3/face/setuserid',
+	        data:{api_key:"o9YkWqD51cPCuI0X_knQ7f1CgzXfPiBI",
+					api_secret:"SWHi48OaxPLmx0dL_hn5N1dNaTLp_Oxo",
+	        		user_id:$("#name").val(),
+	        		face_token:token
+	        },
+	        async:true,
+	        type:'POST',
+	        dataType:'json',
+	        success : function(result) {
+	            console.log(toJson(result));
+	        },
+	        error : function(){
+	        		console.log("出错了");
+	        }
+	       });
+	      } 
+	</script>
+</html>
